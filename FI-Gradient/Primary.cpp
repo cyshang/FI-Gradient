@@ -3,20 +3,33 @@
 
 using namespace std;
 
+string Primary::name("r");
+
 void Primary::getPrim(TokenStream & ts)
 {
 	ts.get();
 
 	if (ts.current().kind != Kind::r) { throw "Error"; }
 
-	rid  = ts.getId();
-	rexp = 1;
+	my_id  = ts.getId();
+	exp = 1;
 
-	ts.get();
 	if (ts.current().kind == Kind::exp) {
 		ts.get();
 		if (ts.current().kind != Kind::number) { throw "Error"; }
-		rexp = ts.current().number_value;
+		exp = ts.current().number_value;
 		ts.get();
 	}
+}
+
+void Primary::print(ostream & os) const
+{
+	if (exp == 0) {
+		os << "1.d0";
+		return;
+	}
+
+	os << name << '(' << my_id << ')';
+	if (exp > 1)
+		os << "**" << exp;
 }

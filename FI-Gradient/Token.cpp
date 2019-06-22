@@ -1,10 +1,11 @@
-
 #include "Token.h"
+#include "Expression.h"
+#include "Primary.h"
 
 using namespace std;
 
-const string fi_name("p");
-const string r_name("r");
+const string fi_name(Expression::name);
+const string r_name(Primary::name);
 
 int TokenStream::getId()
 {
@@ -18,6 +19,7 @@ int TokenStream::getId()
 	get();
 	if (ct.kind != Kind::rp) throw "Error";
 
+	get();
 	return id;
 }
 
@@ -33,7 +35,7 @@ Token TokenStream::get()
 	case '*':
 		if (ip->peek() == '*') {
 			ip->get(ch);
-			ct.kind == Kind::exp;
+			ct.kind = Kind::exp;
 			break;
 		}
 	case '+':

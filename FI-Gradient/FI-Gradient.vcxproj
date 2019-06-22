@@ -160,7 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Expression.cpp" />
-    <ClCompile Include="FI-Gradient.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Primary.cpp" />
     <ClCompile Include="Term.cpp" />
     <ClCompile Include="Token.cpp" />

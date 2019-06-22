@@ -1,12 +1,19 @@
 #include "Expression.h"
 #include "Token.h"
 
+using namespace std;
+
+string Expression::name("p");
+string Derivative::name("dpdr");
+
 void Expression::getExpr(TokenStream & tk)
 {
+	string errStr = string("Error in") + __func__ + ": ";
+
 	term.clear();
 	if (tk.current().kind != Kind::fi) { throw "Error"; }
 
-	pid = tk.getId();
+	my_id = tk.getId();
 
 	if (tk.current().kind != Kind::assign) { throw "Error"; }
 
@@ -15,4 +22,46 @@ void Expression::getExpr(TokenStream & tk)
 		term.back().getTerm(tk);
 	} while (tk.current().kind == Kind::plus);
 
+}
+
+Derivative Expression::derivate(int id)
+{
+	Derivative deriv(my_id, id);
+
+	Term tmp;
+	for (size_t i = 0; i < term.size(); ++i) {
+		tmp = term[i].derivate(id);
+		if (tmp.getCoef())
+			deriv.terms.push_back(tmp);
+	}
+
+	return deriv;
+}
+
+void Expression::print(ostream & os) const
+{
+	os << name << '(' << my_id << ")=";
+
+	for (size_t i = 0; i < term.size(); ++i) {
+		term[i].print(os);
+
+		if (i != term.size() - 1)
+			os << '+';
+	}
+
+	os << endl;
+}
+
+void Derivative::print(ostream & os)
+{
+	if (terms.size() == 0) return;
+
+	os << name << '(' << pid << ',' << rid << ")=";
+	for (size_t i = 0; i < terms.size(); ++i) {
+		terms[i].print(os);
+		if (i != terms.size() - 1)
+			os << '+';
+	}
+
+	os << endl;
 }

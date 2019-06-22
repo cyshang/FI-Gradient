@@ -10,12 +10,14 @@ class TokenStream;
 class Term
 {
 public:
-	Term() :coef(0) {}
+	Term() :coef(1) {}
+	Term(int _coef) :coef(_coef) {}
 
 	void getTerm(TokenStream & ts);
 	Term derivate(int id);
-	friend std::ostream & operator << (std::ostream os, const Term & term);
+	void print(std::ostream & os) const;	
 
+	inline int getCoef() const { return coef; }
 private:
 	int coef;
 	std::vector<Primary> prim;
