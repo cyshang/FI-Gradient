@@ -7,7 +7,6 @@
 #include "Term.h"
 
 class TokenStream;
-
 class Derivative;
 
 class Expression

@@ -1,10 +1,13 @@
+#include <algorithm>
 #include "Expression.h"
 #include "Token.h"
 
 using namespace std;
 
-string Expression::name("p");
-string Derivative::name("dpdr");
+extern int pTotal;
+
+string Expression::name;
+string Derivative::name;
 
 void Expression::getExpr(TokenStream & tk)
 {
@@ -14,6 +17,8 @@ void Expression::getExpr(TokenStream & tk)
 	if (tk.current().kind != Kind::fi) { throw "Error"; }
 
 	my_id = tk.getId();
+
+	pTotal = (my_id > pTotal) ? my_id : pTotal;
 
 	if (tk.current().kind != Kind::assign) { throw "Error"; }
 
@@ -34,6 +39,8 @@ Derivative Expression::derivate(int id)
 		if (tmp.getCoef())
 			deriv.terms.push_back(tmp);
 	}
+
+	sort(deriv.terms.begin(), deriv.terms.end());
 
 	return deriv;
 }

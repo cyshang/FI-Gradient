@@ -16,6 +16,10 @@ public:
 	static std::string name;
 	inline int & getId() { return my_id; }
 	inline int & getExp() { return exp; }
+
+	friend inline bool operator<(const Primary & a, const Primary & b) {
+		return (a.exp != b.exp) ? (a.exp > b.exp) : (a.my_id < b.my_id);
+	}
 private:
 	int my_id;
 	int exp;

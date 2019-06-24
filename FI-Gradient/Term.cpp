@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "Term.h"
 #include "Token.h"
 
@@ -25,17 +26,19 @@ Term Term::derivate(int id)
 
 	if (pos == len) return Term(0);
 
-	Term term;
+	Term terms;
 	for (int i = 0; i < len; ++i) {		
-		term.prim.push_back(prim[i]);
+		terms.prim.push_back(prim[i]);
 
 		if (i == pos) {
-			coef *= term.prim[i].getExp();
-			term.prim[i].derivate();
+			terms.coef *= terms.prim[i].getExp();
+			terms.prim[i].derivate();
 		}
 	}
 
-	return term;
+	sort(terms.prim.begin(), terms.prim.end());
+
+	return terms;
 }
 
 void Term::print(ostream & os) const

@@ -3,7 +3,9 @@
 
 using namespace std;
 
-string Primary::name("r");
+extern int rTotal;
+
+string Primary::name;
 
 void Primary::getPrim(TokenStream & ts)
 {
@@ -12,7 +14,8 @@ void Primary::getPrim(TokenStream & ts)
 	if (ts.current().kind != Kind::r) { throw "Error"; }
 
 	my_id  = ts.getId();
-	exp = 1;
+	rTotal = (my_id > rTotal) ? my_id : rTotal;
+	exp    = 1;
 
 	if (ts.current().kind == Kind::exp) {
 		ts.get();

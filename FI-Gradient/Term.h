@@ -18,6 +18,10 @@ public:
 	void print(std::ostream & os) const;	
 
 	inline int getCoef() const { return coef; }
+
+	friend inline bool operator<(const Term & a, const Term & b) {
+		return (a.prim.size() && b.prim.size()) ? (a.prim[0] < b.prim[0]) : (a.prim.size() > b.prim.size());
+	}
 private:
 	int coef;
 	std::vector<Primary> prim;

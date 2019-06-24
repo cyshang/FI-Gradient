@@ -4,9 +4,6 @@
 
 using namespace std;
 
-const string fi_name(Expression::name);
-const string r_name(Primary::name);
-
 int TokenStream::getId()
 {
 	get();
@@ -55,11 +52,11 @@ Token TokenStream::get()
 			while (ip->get(ch) && isalpha(ch))
 				string_value += ch;
 
-			if (ch == '(' && (string_value == fi_name || string_value == r_name)) {
+			if (ch == '(' && (string_value == Expression::name || string_value == Primary::name)) {
 				ip->putback(ch);
 
 				ct.string_value = string_value;
-				ct.kind = (string_value == fi_name) ? Kind::fi : Kind::r;
+				ct.kind = (string_value == Expression::name) ? Kind::fi : Kind::r;
 
 				break;
 			}

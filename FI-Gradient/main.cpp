@@ -1,41 +1,50 @@
 ﻿#include <cstdlib>
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <vector>
 #include "Expression.h"
 #include "Token.h"
 
 using namespace std;
 
+int rTotal(0);
+int pTotal(0);
+
 int main(int argc, char **argv)
 {
-	int r_num(0);
-
-	cout << "Please input r nums: ";
-	cin >> r_num;
+	Expression::name = "p";
+	Primary::name    = "r";
+	Derivative::name = "dpdr";
 
 	if (argc < 2) {
-		cerr << "Error: missing input file!" << endl;
-		exit(127);
+		cerr << "Error: missing <file> oprand!" << endl;
+		return 127;
 	}
-	string   file_name(argv[1]);
-	ifstream fin;
 
-	fin.open(file_name.c_str(), ifstream::in);
-
+	string      argStr = argv[1];
+	ifstream    fin(argStr.c_str(), ifstream::in);
 	TokenStream tk(fin);
+	
+	ofstream fout;
+	fout.open("grad.out", ofstream::out);
+	
+	vector<Expression> exprs;
 
-	tk.get();
-	Expression expr;
-		
+	tk.get();	
 	while (tk.current().kind != Kind::end) {
-		expr.getExpr(tk);
-		for (int rid = 1; rid <= r_num; ++rid) {
-			expr.derivate(rid).print(cout);
+		exprs.push_back(Expression());
+		exprs.back().getExpr(tk);
+	}
+
+	for (size_t i = 0; i < exprs.size(); ++i) {
+		for (int rid = 1; rid <= rTotal; ++rid) {
+			exprs[i].derivate(rid).print(fout);
 		}
 	}
 
+	fout.close();
 	fin.close();
-
 	return 0;
 }
 
