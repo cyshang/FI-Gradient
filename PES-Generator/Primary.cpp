@@ -3,16 +3,9 @@
 
 using namespace std;
 
-extern int rTotal;
+extern int dimR;
 
-bool Primary::initFlag(true);
 string Primary::name;
-
-void Primary::initStatic()
-{
-	initFlag = false;
-	Primary::name = "r";
-}
 
 void Primary::getPrim(TokenStream & ts)
 {
@@ -21,7 +14,7 @@ void Primary::getPrim(TokenStream & ts)
 	if (ts.current().kind != Kind::r) { throw "Error"; }
 
 	my_id  = ts.getId();
-	rTotal = (my_id > rTotal) ? my_id : rTotal;
+	dimR   = (my_id > dimR) ? my_id : dimR;
 	exp    = 1;
 
 	if (ts.current().kind == Kind::exp) {

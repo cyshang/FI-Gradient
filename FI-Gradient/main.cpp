@@ -11,11 +11,10 @@ using namespace std;
 int rTotal(0);
 int pTotal(0);
 
+void printDeclare(ofstream & fout);
+
 int main(int argc, char **argv)
 {
-	Expression::name = "p";
-	Primary::name    = "r";
-	Derivative::name = "dpdr";
 
 	if (argc < 2) {
 		cerr << "Error: missing <file> oprand!" << endl;
@@ -45,6 +44,16 @@ int main(int argc, char **argv)
 
 	fout.close();
 	fin.close();
+
+	fout.open("declare.out", ofstream::out);
+	printDeclare(fout);
+	fout.close();
+
 	return 0;
 }
 
+void printDeclare(ofstream & fout)
+{
+	fout << "real*8, intent(in)  :: r(" << rTotal << ')' << endl;
+	fout << "real*8, intent(out) :: dpdr(" << pTotal << ',' << rTotal << ')' << endl;
+}

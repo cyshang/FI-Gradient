@@ -12,8 +12,8 @@ class Derivative;
 class Expression
 {
 public:
-	Expression() :my_id(0) { if (initFlag) initStatic(); }
-	Expression(int _id) :my_id(_id) { if (initFlag) initStatic(); }
+	Expression() :my_id(0) {}
+	Expression(int _id) :my_id(_id) {}
 
 	void getExpr(TokenStream & tk);
 	Derivative derivate(int id);
@@ -22,9 +22,6 @@ public:
 	static std::string name;
 
 private:
-	static bool initFlag;
-	static void initStatic();
-
 	int my_id;
 	std::vector<Term> term;
 };
@@ -34,15 +31,12 @@ class Derivative
 	friend Expression;
 
 public:
-	Derivative(int _pid, int _rid) :pid(_pid), rid(_rid) { if (initFlag) initStatic(); }
+	Derivative(int _pid, int _rid) :pid(_pid), rid(_rid) {}
 	void print(std::ostream & os);
 
 	static std::string name;
 
 private:
-	static bool initFlag;
-	static void initStatic();
-
 	int pid;
 	int rid;
 	std::vector<Term> terms;

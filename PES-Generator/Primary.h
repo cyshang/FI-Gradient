@@ -9,7 +9,7 @@ class TokenStream;
 class Primary
 {
 public:
-	Primary() :my_id(0), exp(1) { if (initFlag) initStatic(); }
+	Primary() :my_id(0), exp(1) {}
 
 	void getPrim(TokenStream & ts);
 	void print(std::ostream & os) const;
@@ -23,8 +23,6 @@ public:
 		return (a.exp != b.exp) ? (a.exp > b.exp) : (a.my_id < b.my_id);
 	}
 private:
-	static bool initFlag;
-	static void initStatic();
 
 	int my_id;
 	int exp;

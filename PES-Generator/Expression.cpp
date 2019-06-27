@@ -4,24 +4,10 @@
 
 using namespace std;
 
-extern int pTotal;
+extern int dimP;
 
-bool Expression::initFlag(true);
-bool Derivative::initFlag(true);
 string Expression::name;
 string Derivative::name;
-
-void Expression::initStatic() 
-{
-	Expression::initFlag = false;
-	Expression::name = "p";
-}
-
-void Derivative::initStatic()
-{
-	Derivative::initFlag = false;
-	Derivative::name = "dpdr";
-}
 
 void Expression::getExpr(TokenStream & tk)
 {
@@ -32,7 +18,7 @@ void Expression::getExpr(TokenStream & tk)
 
 	my_id = tk.getId();
 
-	pTotal = (my_id > pTotal) ? my_id : pTotal;
+	dimP = (my_id > dimP) ? my_id : dimP;
 
 	if (tk.current().kind != Kind::assign) { throw "Error"; }
 

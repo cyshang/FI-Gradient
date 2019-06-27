@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 	printSubst(fout);
 	fout.close();
 
-	fout.open("declare.out", ofstream::out);
+	fout.open("declare.out", ofstream::app);
 	printDeclare(fout);
 	fout.close();
 
@@ -221,18 +221,25 @@ bool replaceRab(string & str)
 void printDeclare(ostream & out)
 {
 	for (int iExp = 2; iExp <= maxExp; ++iExp) {
-		out << "real*8 :: r" << iExp << '(' << rTotal << ')' << endl;
+		out << "real*8, intent(in)  :: r" << iExp << '(' << rTotal << ')' << endl;
 	}
 
 	int idMax = rTotal * (rTotal - 1) / 2;
-	out << "real*8 :: rab(" << idMax << ')' << endl;
+	out << "real*8, intent(in)  :: rab(" << idMax << ')' << endl;
 }
 
 void printSubst(ostream & out)
 {
 	for (int iExp = 2; iExp <= maxExp; ++iExp) {
-		for (int i = 1; i <= rTotal; ++i) {
-			out << 'r' << iExp << '(' << i << ")=r(" << i << ")**" << iExp << endl;
+		if (iExp == 2) {
+			for (int i = 1; i <= rTotal; ++i) {
+				out << 'r' << iExp << '(' << i << ")=r(" << i << ")**" << iExp << endl;
+			}
+		}
+		else {
+			for (int i = 1; i <= rTotal; ++i) {
+				out << 'r' << iExp << '(' << i << ")=r" << iExp - 1 << '(' << i << ")*r(" << i << ')' << endl;
+			}
 		}
 	}
 
